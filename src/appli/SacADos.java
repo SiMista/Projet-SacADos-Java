@@ -21,7 +21,8 @@ public class SacADos {
 		BufferedReader in = new BufferedReader(new FileReader(chemin));
 		String line;
 		while ((line = in.readLine()) != null) {
-			// sac.vérifEntrée(line); Vérifies que l'entrée est correcte
+			if (this.vérifEntrée(line)) // Vérifies que l'entrée est correcte
+				return;
 			StringTokenizer stk = new StringTokenizer(line, ";");
 			Objet obj = new Objet(stk.nextToken(), Float.valueOf(stk.nextToken()), Float.valueOf(stk.nextToken()));
 			// Pas du tout nécessaire, c'est pour tester
@@ -30,28 +31,22 @@ public class SacADos {
 			System.out.println(obj.getPoids());
 			System.out.println(obj.getPrix());
 			System.out.println("");
-			
+
 			contenu.add(obj);
-			
+
 		}
 		in.close();
 		this.poidsMax = poidsMax;
 	}
-	
-	// Pas sûr que cette méthode soit nécessaire
-	public void vérifEntrée(String s) {
-		// Regular expression: ajouter mots et chiffre à espace + chiffre avec x.0
-		if (Pattern.matches("^[a-zA-Z]{1,} ;{1} [0-9]{1,} ;{1} [0-9]{1,}$", "Lampe ; 23 ; 32")) {
-			System.out.println("c'est bien réeel");
-		} else {
-			System.out.println("c'est faux sah");
-		}
-	}
-	
-	/*
-	public ArrayList<Objet> getContenu() {
-		return contenu;
-	}
-	*/
 
+	// Pas sûr que cette méthode soit nécessaire
+	public boolean vérifEntrée(String s) {
+		// Regular expression: ajouter mots et chiffre à espace + chiffre avec x.0
+		if (!Pattern.matches("^[\\w\\s]{1,} ;{1} [\\d]{1,}[.][\\d]{1,} ;{1} [\\d]{1,}[.][\\d]{1,}$", s)) {
+			System.out.println("Erreur du format de l'entrée");
+			return true;
+		}
+		return false;
+	}
+	
 }
