@@ -22,15 +22,18 @@ public class SacADos {
 		String line;
 		while ((line = in.readLine()) != null) {
 			// sac.vérifEntrée(line); Vérifies que l'entrée est correcte
+			Objet obj = new Objet();
 			StringTokenizer stk = new StringTokenizer(line, ";");
-			Objet obj = new Objet(stk.nextToken(), Float.valueOf(stk.nextToken()), Float.valueOf(stk.nextToken()));
-			// Pas du tout nécessaire, c'est pour tester
 			System.out.println("Objet:");
-			System.out.println(obj.getNom());
-			System.out.println(obj.getPoids());
-			System.out.println(obj.getPrix());
+			while (stk.hasMoreTokens()) {
+				obj.setNom(stk.nextToken());
+				obj.setPoids(Float.valueOf(stk.nextToken()));
+				obj.setPrix(Float.valueOf(stk.nextToken()));
+				System.out.println(obj.getNom());
+				System.out.println(obj.getPoids());
+				System.out.println(obj.getPrix());
+			}
 			System.out.println("");
-			
 			contenu.add(obj);
 			
 		}
