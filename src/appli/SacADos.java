@@ -41,8 +41,11 @@ public class SacADos {
 		this.poidsMax = poidsMax;
 	}
 	
-	public void resoudre() {
-		//faire appel au 3 méthodes
+	public void resoudre(String s) {
+		switch (s) {
+		case "gloutonne":
+			glouttonne();
+		}
 	}
 	
 	public void glouttonne() {
@@ -59,16 +62,23 @@ public class SacADos {
 			this.listeObjet.set(max, this.listeObjet.get(x));
 			this.listeObjet.set(x, tmp);
 		}
+		// Syso pour vérifier les objets mis dans la listeobjets
+		System.out.println("   Objets mis dans la liste\n");
 		for (int i = 0; i<this.listeObjet.size()-1; i++) {
-			System.out.println(this.listeObjet.get(i).getPrix()/this.listeObjet.get(i).getPoids());
-			}
+			System.out.println(listeObjet.get(i).getNom());
+			System.out.println(this.listeObjet.get(i).getPrix()/this.listeObjet.get(i).getPoids() + "\n");
+		}
+		
+		System.out.println("   Objets ajouté dans le sac\n");
 		while (!this.listeObjet.isEmpty()) {
-				poidsObjets += this.listeObjet.get(0).getPoids();
-				if(poidsObjets<=poidsMax) {
+				if(poidsObjets + this.listeObjet.get(0).getPoids()<=poidsMax) {
+					// Syso pour montrer l'objet mis dans le sac
+					System.out.println("Poids du sac = " + poidsObjets + "   Poids Max = " + poidsMax);
+					poidsObjets += this.listeObjet.get(0).getPoids();
 					this.sac.add(this.listeObjet.get(0));
-					this.listeObjet.remove(0);
+					
 				}
-				else break;
+				this.listeObjet.remove(0);
 			}
 		}
 		
@@ -84,6 +94,5 @@ public class SacADos {
 			return true;
 		}
 		return false;
-	}
-	
+	}	
 }
