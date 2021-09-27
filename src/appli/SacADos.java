@@ -12,16 +12,19 @@ public class SacADos {
 	private ArrayList<Objet> sac;
 	private ArrayList<Objet> listeObjet;
 	private float poidsMax;
+	private float poidsActuel;
 	
 
 	public SacADos() {
 		sac = new ArrayList<>();
 		listeObjet = new ArrayList<Objet>();
+		poidsActuel = 0;
 	}
 
 	public SacADos(String chemin, float poidsMax) throws NumberFormatException, IOException {
 		sac = new ArrayList<>();
 		listeObjet = new ArrayList<Objet>();
+		poidsActuel = 0;
 		BufferedReader in = new BufferedReader(new FileReader(chemin));
 		String line;
 		while ((line = in.readLine()) != null) {
@@ -48,8 +51,12 @@ public class SacADos {
 		}
 	}
 	
+	public void ajouter (Objet o) {
+		poidsActuel += listeObjet.get(0).getPoids();
+		sac.add(listeObjet.get(0));
+	}
+	
 	public void glouttonne() {
-		float poidsObjets = 0;
 		for (int x = 0; x<this.listeObjet.size()-2; x++) {
 			int max = x;
 			for (int j = x; j<this.listeObjet.size()-1; j++) {
@@ -71,11 +78,10 @@ public class SacADos {
 		
 		System.out.println("   Objets ajouté dans le sac\n");
 		while (!this.listeObjet.isEmpty()) {
-				if(poidsObjets + this.listeObjet.get(0).getPoids()<=poidsMax) {
+				if(poidsActuel + this.listeObjet.get(0).getPoids()<=poidsMax) {
 					// Syso pour montrer l'objet mis dans le sac
-					System.out.println("Poids du sac = " + poidsObjets + "   Poids Max = " + poidsMax);
-					poidsObjets += this.listeObjet.get(0).getPoids();
-					this.sac.add(this.listeObjet.get(0));
+					System.out.println("Poids du sac = " + poidsActuel + "   Poids Max = " + poidsMax);
+					ajouter(this.listeObjet.get(0));
 					
 				}
 				this.listeObjet.remove(0);
