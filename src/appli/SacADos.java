@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
@@ -33,12 +34,6 @@ public class SacADos {
 				return;
 			StringTokenizer stk = new StringTokenizer(line, ";");
 			Objet obj = new Objet(stk.nextToken(), Float.valueOf(stk.nextToken()), Float.valueOf(stk.nextToken()));
-			// Pas du tout nécessaire, c'est pour tester
-			/*System.out.println("Objet:");
-			System.out.println(obj.getNom());
-			System.out.println(obj.getPoids());
-			System.out.println(obj.getPrix());
-			System.out.println("");*/
 			listeObjet.add(obj);
 		}
 		in.close();
@@ -58,36 +53,46 @@ public class SacADos {
 	}
 	
 	public void glouttonne() {
-		for (int x = 0; x<this.listeObjet.size()-2; x++) {
-			int max = x;
-			for (int j = x; j<this.listeObjet.size()-1; j++) {
-				if(this.listeObjet.get(j).getPrix()/this.listeObjet.get(j).getPoids()>this.listeObjet.get(max).getPrix()/this.listeObjet.get(max).getPoids()) {
-					max = j;
-				}
+		ArrayList<Objet> tmp = triRapide(this.listeObjet);
+		for (int i = 0; i<tmp.size()-1; i++) {
+			//System.out.println(tmp.get(i).getPrix()/tmp.get(i).getPoids());
 			}
-			//echanger x avec max
-			Objet tmp = this.listeObjet.get(max);
-			this.listeObjet.set(max, this.listeObjet.get(x));
-			this.listeObjet.set(x, tmp);
-		}
-		// Syso pour vérifier les objets mis dans la listeobjets
-		System.out.println("   Objets mis dans la liste\n");
-		for (int i = 0; i<this.listeObjet.size()-1; i++) {
-			System.out.println(listeObjet.get(i).getNom());
-			System.out.println(this.listeObjet.get(i).getPrix()/this.listeObjet.get(i).getPoids() + "\n");
-		}
-		
-		System.out.println("   Objets ajouté dans le sac\n");
 		while (!this.listeObjet.isEmpty()) {
-				if(poidsActuel + this.listeObjet.get(0).getPoids()<=poidsMax) {
-					// Syso pour montrer l'objet mis dans le sac
-					System.out.println("Poids du sac = " + poidsActuel + "   Poids Max = " + poidsMax);
-					ajouter(this.listeObjet.get(0));
-					
+				this.poidsActuel += this.listeObjet.get(0).getPoids();
+				if(this.poidsActuel<=poidsMax) {
+					this.sac.add(this.listeObjet.get(0));
+					this.listeObjet.remove(0);
 				}
-				this.listeObjet.remove(0);
+				else break;
 			}
 		}
+	
+	public int repartition(ArrayList<Objet> T, int premier, int dernier, int pivot) {
+		Collections.swap(T, pivot, dernier);
+		int j = premier;
+		for(int i = premier; i<dernier-1; i++) {
+			if(T.get(i).getPrix()/T.get(i).getPoids()>=T.get(dernier).getPrix()/T.get(dernier).getPoids()) {
+				Collections.swap(T, i, j);
+				j += 1;
+			}
+		}
+		Collections.swap(T, dernier, j);
+		return j;
+	}
+	
+	public ArrayList<Objet> triRapideRec(ArrayList<Objet> T, int premier, int dernier){
+		if (premier<dernier) {
+			int pivot = (premier + dernier)/2;
+			int nouvPivot = repartition(T, premier, dernier, pivot);
+			triRapideRec(T, premier, nouvPivot-1);
+			triRapideRec(T, nouvPivot+1, dernier);
+		}
+		return T;
+	}
+	
+	public ArrayList<Objet> triRapide(ArrayList<Objet> T){
+		return triRapideRec(T, 0, T.size()-1);
+	}
 		
 	public ArrayList<Objet> getSac(){
 		return this.sac;
