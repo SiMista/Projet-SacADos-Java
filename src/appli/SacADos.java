@@ -1,6 +1,7 @@
 package appli;
 
 import java.io.BufferedReader;
+import java.util.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,20 +48,9 @@ public class SacADos {
 	
 	public void glouttonne() {
 		float poidsObjets = 0;
-		for (int x = 0; x<this.listeObjet.size()-2; x++) {
-			int max = x;
-			for (int j = x; j<this.listeObjet.size()-1; j++) {
-				if(this.listeObjet.get(j).getPrix()/this.listeObjet.get(j).getPoids()>this.listeObjet.get(max).getPrix()/this.listeObjet.get(max).getPoids()) {
-					max = j;
-				}
-			}
-			//echanger x avec max
-			Objet tmp = this.listeObjet.get(max);
-			this.listeObjet.set(max, this.listeObjet.get(x));
-			this.listeObjet.set(x, tmp);
-		}
-		for (int i = 0; i<this.listeObjet.size()-1; i++) {
-			System.out.println(this.listeObjet.get(i).getPrix()/this.listeObjet.get(i).getPoids());
+		ArrayList<Objet> tmp = triRapide(this.listeObjet);
+		for (int i = 0; i<tmp.size()-1; i++) {
+			System.out.println(tmp.get(i).getPrix()/tmp.get(i).getPoids());
 			}
 		while (!this.listeObjet.isEmpty()) {
 				poidsObjets += this.listeObjet.get(0).getPoids();
@@ -71,6 +61,33 @@ public class SacADos {
 				else break;
 			}
 		}
+	
+	public int repartition(ArrayList<Objet> T, int premier, int dernier, int pivot) {
+		Collections.swap(T, pivot, dernier);
+		int j = premier;
+		for(int i = premier; i<dernier-1; i++) {
+			if(T.get(i).getPrix()/T.get(i).getPoids()>=T.get(dernier).getPrix()/T.get(dernier).getPoids()) {
+				Collections.swap(T, i, j);
+				j += 1;
+			}
+		}
+		Collections.swap(T, dernier, j);
+		return j;
+	}
+	
+	public ArrayList<Objet> triRapideRec(ArrayList<Objet> T, int premier, int dernier){
+		if (premier<dernier) {
+			int pivot = (premier + dernier)/2;
+			int nouvPivot = repartition(T, premier, dernier, pivot);
+			triRapideRec(T, premier, nouvPivot-1);
+			triRapideRec(T, nouvPivot+1, dernier);
+		}
+		return T;
+	}
+	
+	public ArrayList<Objet> triRapide(ArrayList<Objet> T){
+		return triRapideRec(T, 0, T.size()-1);
+	}
 		
 	public ArrayList<Objet> getSac(){
 		return this.sac;
