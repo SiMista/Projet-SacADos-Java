@@ -38,6 +38,16 @@ public class SacADos {
 		}
 		in.close();
 		this.poidsMax = poidsMax;
+		
+		System.out.println("   Objets ajoute dans la liste\n");
+		float poids = 0;
+		for (Objet o : listeObjet) {
+			System.out.println(o.getNom());
+			System.out.println(o.getPoids());
+			System.out.println(o.getPrix());
+			poids += o.getPoids();
+		}
+		System.out.println("\n Voici le poids de la liste d'objets " + poids);
 	}
 	
 	public void resoudre(String s) {
