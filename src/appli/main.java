@@ -8,7 +8,7 @@ public class main {
 		// Siméon chemin
 		//SacADos sacADos = new SacADos("C:\\Users\\simeo\\OneDrive\\Bureau\\ListeObj.txt", 7);
 		// Niru chemin
-		SacADos sacADos = new SacADos("C:\\Users\\sniru\\eclipse-workspace\\porjetAAV\\ListeObj.txt", 7);
+		SacADos sacADos = new SacADos("C:\\Users\\sniru\\eclipse-workspace\\porjetAAV\\ListeObj.txt", 199);
 		sacADos.glouttonne();
 		// Syso pour montrer tout les objets dans le sac
 		System.out.println("\n   Objets dans le sac\n");
