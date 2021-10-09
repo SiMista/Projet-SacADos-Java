@@ -6,7 +6,7 @@ public class main {
 
 	public static void main(String[] args) throws IOException {
 		// Siméon chemin
-		SacADos sacADos = new SacADos("C:\\Users\\simeo\\OneDrive\\Bureau\\ListeObj.txt", 9);
+		SacADos sacADos = new SacADos("C:\\Users\\simeo\\OneDrive\\Bureau\\ListeObj.txt", 5);
 		// Niru chemin
 		//SacADos sacADos = new SacADos("C:\\Users\\sniru\\eclipse-workspace\\porjetAAV\\ListeObj.txt", 7);
 		sacADos.progDynamique();
