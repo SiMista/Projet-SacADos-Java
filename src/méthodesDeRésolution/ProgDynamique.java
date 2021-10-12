@@ -6,6 +6,7 @@ import appli.Objet;
 import appli.SacADos;
 
 public class ProgDynamique {
+	// wesh
 	public void résoudre(SacADos sac) {
 		float coeff = coefMultiplicateur(sac.getListeObjets());
 		int ligneMax = sac.getNbObjetsMax();
