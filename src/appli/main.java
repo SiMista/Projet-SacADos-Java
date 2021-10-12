@@ -5,14 +5,13 @@ import méthodesDeRésolution.Glouttonne;
 import méthodesDeRésolution.ProgDynamique;
 
 public class main {
-
 	public static void main(String[] args) throws IOException {
 		// Siméon chemin
 		Glouttonne glouttonne = new Glouttonne();
 		ProgDynamique progDynamique = new ProgDynamique();
-		SacADos sacADos = new SacADos("C:\\Users\\simeo\\OneDrive\\Bureau\\ListeObj.txt", 4.55F);
+		//SacADos sacADos = new SacADos("C:\\Users\\simeo\\OneDrive\\Bureau\\ListeObj.txt", 4.55F);
 		// Niru chemin
-		//SacADos sacADos = new SacADos("C:\\Users\\sniru\\eclipse-workspace\\porjetAAV\\ListeObj.txt", 7);
+		SacADos sacADos = new SacADos("C:\\Users\\sniru\\eclipse-workspace\\porjetAAV\\ListeObj.txt", 7);
 		progDynamique.résoudre(sacADos);
 		// Syso pour montrer tout les objets dans le sac
 		System.out.println("\n   Objets dans le sac\n");
