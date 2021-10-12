@@ -60,108 +60,9 @@ public class SacADos {
 		return false;
 	}
 
-	public void ajouterAuSac(Objet objet) {
+	public void ajouter(Objet objet) {
 		sac.add(objet);
 		poidsActuel += objet.getPoids();
-	}
-
-	public void glouttonne() {
-		ArrayList<Objet> tmp = triRapide(this.listeObjets);
-		for (int i = 0; i < tmp.size() - 1; i++) {
-			 // System.out.println(tmp.get(i).getPrix()/tmp.get(i).getPoids());
-		}
-		while (!this.listeObjets.isEmpty()) {
-			if(this.poidsActuel + this.listeObjets.get(0).getPoids() <=poidsMax) {
-				ajouterAuSac(listeObjets.get(0));
-				listeObjets.remove(0);
-			}
-			else break;
-		}
-	}
-
-	public int repartition(ArrayList<Objet> T, int premier, int dernier, int pivot) {
-		echanger(T, pivot, dernier);
-		int j = premier;
-		for (int i = premier; i < dernier - 1; i++) {
-			if (T.get(i).getPrix() / T.get(i).getPoids() >= T.get(dernier).getPrix() / T.get(dernier).getPoids()) {
-				echanger(T, i, j);
-				j += 1;
-			}
-		}
-		echanger(T, dernier, j);
-		return j;
-	}
-	
-	private void echanger(ArrayList<Objet> liste, int a, int b) {
-		Objet tmp = liste.get(a);
-		liste.set(a, liste.get(b));
-		liste.set(b, tmp);
-	}
-
-	public ArrayList<Objet> triRapideRec(ArrayList<Objet> T, int premier, int dernier) {
-		if (premier < dernier) {
-			int pivot = (premier + dernier) / 2;
-			int nouvPivot = repartition(T, premier, dernier, pivot);
-			triRapideRec(T, premier, nouvPivot - 1);
-			triRapideRec(T, nouvPivot + 1, dernier);
-		}
-		return T;
-	}
-
-	public ArrayList<Objet> triRapide(ArrayList<Objet> T) {
-		return triRapideRec(T, 0, T.size() - 1);
-	}
-
-	public void progDynamique() {
-		int ligneMax = nbObjetsMax;
-		int colonneMax =  Math.round(poidsMax);
-		float tabVal[][] = new float[ligneMax][colonneMax + 1];
-
-		for (int j = 0; j <= colonneMax; ++j) {
-			if (Math.round(listeObjets.get(0).getPoids()) > j)
-				tabVal[0][j] = 0;
-			else
-				tabVal[0][j] = listeObjets.get(0).getPrix();
-		}
-
-		for (int i = 1; i < ligneMax; ++i) {
-			for (int j = 0; j <= colonneMax; ++j) {
-				if (Math.round(listeObjets.get(i).getPoids()) > j)
-					tabVal[i][j] = tabVal[i - 1][j];
-				else
-					tabVal[i][j] = maxEntre(tabVal[i - 1][j],
-							tabVal[i - 1][(j - Math.round(listeObjets.get(i).getPoids()))] + listeObjets.get(i).getPrix());
-			}
-		}
-		
-		int i = ligneMax - 1;
-		int j = colonneMax;
-
-		while (j > 0 && tabVal[i][j] == tabVal[i][j - 1]) 
-			--j;
-		
-		
-		while (j > 0) {
-			while (i > 0 && tabVal[i][j] == tabVal[i - 1][j])
-				--i;
-			
-			j = Math.round(j - listeObjets.get(i).getPoids());
-			
-			if (j >= 0) {
-				ajouterAuSac(listeObjets.get(i));
-				System.out.println(j);
-			}
-			--i;
-		}
-		
-		for (int l = 0; l < nbObjetsMax; ++l) {
-			for (int c = 0; c <= Math.round(poidsMax); ++c) {
-				System.out.print(tabVal[l][c]);
-				System.out.print(" ");
-			}
-			System.out.println("");
-		}
-		
 	}
 
 	public float maxEntre(float a, float b) {
@@ -170,5 +71,21 @@ public class SacADos {
 
 	public ArrayList<Objet> getSac() {
 		return this.sac;
+	}
+	
+	public ArrayList<Objet> getListeObjets() {
+		return this.listeObjets;
+	}
+	
+	public float getPoidsMax() {
+		return poidsMax;
+	}
+	
+	public float getPoidsActuel() {
+		return poidsActuel;
+	}
+	
+	public int getNbObjetsMax() {
+		return nbObjetsMax;
 	}
 }
