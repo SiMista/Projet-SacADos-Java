@@ -9,7 +9,11 @@ public class main {
 		// Siméon chemin
 		Glouttonne glouttonne = new Glouttonne();
 		ProgDynamique progDynamique = new ProgDynamique();
+<<<<<<< HEAD
 		//SacADos sacADos = new SacADos("C:\\Users\\simeo\\OneDrive\\Bureau\\ListeObj.txt", 4.55F);
+=======
+		SacADos sacADos = new SacADos("C:\\Users\\simeo\\OneDrive\\Bureau\\ListeObj.txt", 4.4F);
+>>>>>>> parent of bb5ae28 (dÃ©but PSE)
 		// Niru chemin
 		SacADos sacADos = new SacADos("C:\\Users\\sniru\\eclipse-workspace\\porjetAAV\\ListeObj.txt", 7);
 		progDynamique.résoudre(sacADos);
@@ -23,6 +27,7 @@ public class main {
 			System.out.println(obj.getPrix());
 			val += obj.getPrix();
 			poi += obj.getPoids();
+			
 		}
 		System.out.println("\n Voici le poids actuel du sac " + poi);
 		System.out.println("\n Voici la valeur total du sac " + val);
